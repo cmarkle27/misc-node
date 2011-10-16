@@ -1,6 +1,5 @@
 // Works with node.js 0.4.7
-var sys = require("sys"),  
-    http = require("http");  
+var http = require("http");  
 
 http.createServer(function(request, response) {  
         response.setHeader("200", {"Content-Type": "text/html"});  
@@ -8,4 +7,4 @@ http.createServer(function(request, response) {
         response.end(); 
 }).listen(8080);  
 
-sys.puts("Server running at http://localhost:8080/");
+console.log("Server running at http://localhost:8080/");
