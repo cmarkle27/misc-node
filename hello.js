@@ -1,2 +1,2 @@
-var sys = require("sys");
-sys.puts("Hello World!");
+var util = require("util");
+util.puts("Hello World!");
