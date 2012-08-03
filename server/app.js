@@ -1,5 +1,37 @@
-var connect = require("connect");
+var http = require("http"),
+	fs = require("fs"),
+	querystring = require("querystring");
 
-connect(connect.static(__dirname + "/www")).listen(8000);
+http.createServer(function(req, res) {
+	var data = "";
 
-console.log("Connect Http Server Started.");
+	if (req.method == "GET") {
+		getFile(__dirname + "/www/simpleForm.html", res);
+	}
+
+	if (req.method == "POST") {
+		req.on("data", function(chunk) {
+			data += chunk;
+		});
+		req.on("end", function() {
+			var params = querystring.parse(data),
+			userName = params.firstName + " " + params.lastName,
+				html = "<!doctype html>" +
+					"<html><head><title>Hello " + userName + "</title></head>" +
+					"<body><h1>Hello, " + userName + "!</h1></body></html>";
+
+			res.end(html);
+		});
+	}
+}).listen(8000);
+
+function getFile(localPath, res) {
+	fs.readFile(localPath, function(err, contents) {
+		if (!err) {
+			res.end(contents);
+		} else {
+			res.writeHead(500);
+			res.end();
+		}
+	});
+}
