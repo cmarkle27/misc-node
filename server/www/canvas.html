@@ -6,36 +6,45 @@
 
 <body>
     <div>
-    	<canvas id="board" width="480" height="600" style="background:#ddd"></canvas>
-    	<input type="button" id="my-button" value="GO!" />
+    	<canvas id="board" width="480" height="600" style="background:#2b2b2b"></canvas>
     </div>
+    <button id="goButton">GO</button>
 	<script src="http://localhost:1337/socket.io/socket.io.js"></script>
 	<script>
+
+		// just want to try it....
 		var boardContext = document.getElementById("board").getContext("2d"),
 			socket = io.connect("http://localhost:1337"),
-			btn = document.getElementById("my-button");
+			tileImage = new Image(),
+			btn = document.getElementById("goButton")
 
-/*		btn.addEventListener("click", function(e) {
+		function drawTiles() {
+
+			var tiles = Array.prototype.slice.call(arguments),
+				tile,
+				numTiles = tiles.length,
+				tileSize = 50;
+
+			for (var i = 0; i < numTiles; i++) {
+				tile = tiles[i];
+				console.log(tile);
+				boardContext.beginPath();
+				boardContext.rect(tile.x, tile.y, tileSize, tileSize);
+				boardContext.fillStyle = tile.color;
+				boardContext.fill();
+				boardContext.drawImage(tileImage, tile.x, tile.y, tileSize, tileSize);
+			}
+
+		};
+
+		tileImage.src = "images/tile.png";
+
+		socket.on("drawTiles", drawTiles);
+
+		btn.addEventListener("click", function(e) {
 			e.preventDefault();
 			socket.emit("setName", {firstName: "Chris", lastName: "Markle"});
-		});*/
-
-		socket.on("drawTime", function(data) {
-
-			// global
-			boardContext.clearRect(0, 0, 480, 600);
-
-				// global
-			boardContext.beginPath();
-			boardContext.rect(data.xc, data.yc, 100, 100);
-			boardContext.fillStyle = "#bada55";
-			boardContext.fill();
-			//pieceContext.drawImage(that.tileImage, xCoord, yCoord, that.tileSize, that.tileSize);
-
-
-	});
-
-
+		});
 
 	</script>
 </body>

@@ -7,12 +7,15 @@ io.sockets.on("connection", function(socket) {
 
   socket.on("setName", function(data) {
     var userName = data.firstName + " " + data.lastName;
-    socket.emit("nameSet", {userName: userName});
+    //socket.emit("nameSet", {userName: userName});
     console.log(userName);
   });
 
   setTimeout(function() {
-	socket.emit("drawTime", { "xc" : 200, "yc" : 231 });
-  }, 5000);
+	socket.emit("drawTiles",
+		{ "x" : 200, "y" : 200, "color" : "#777777" },
+		{ "x" : 100, "y" : 300, "color" : "#cc0000" }
+	);
+  }, 3000);
 
 });
